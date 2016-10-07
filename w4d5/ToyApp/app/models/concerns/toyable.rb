@@ -6,6 +6,9 @@ module Toyable
   end
 
   def receive_toy(name)
-    self.joins(:toys).where('toys.name' => name)
+    toy = Toy.find_or_create_by(name: name)
+    toy.toyable_id = self.id
+    toy.toyable_type = self.class
+    toy.save
   end
 end
